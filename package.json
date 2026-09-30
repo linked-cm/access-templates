@@ -1,0 +1,71 @@
+{
+  "name": "@linked.cm/access-templates",
+  "description": "Network role templates for @_linked/access: versioned role templates as shapes, per-organization roles based on them, adjustments that survive template upgrades.",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linked-cm/access-templates.git"
+  },
+  "version": "1.0.0",
+  "linkedPackage": true,
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/esm/index.d.ts",
+  "license": "ISC",
+  "scripts": {
+    "start": "linked dev",
+    "build": "rimraf ./lib && npm run build-esm && npm run build-cjs && npm run copy-to-lib && npm run dual-package",
+    "build-esm": "echo \"compiling ESM\" && rimraf ./lib/esm && tsc -p tsconfig-esm.json",
+    "build-cjs": "echo \"compiling CJS\" && rimraf ./lib/cjs && tsc -p tsconfig-cjs.json",
+    "copy-to-lib": "echo 'copying CSS + JSON assets to lib folder' && copyfiles -u 1 'src/**/*.css' 'src/**/*.json' lib/esm && copyfiles -u 1 'src/**/*.css' 'src/**/*.json' lib/cjs",
+    "dual-package": "echo 'adding package.json to each lib folder for dual output support' && tsconfig-to-dual-package ./tsconfig-cjs.json ./tsconfig-esm.json"
+  },
+  "keywords": [
+    "linked",
+    "linked data",
+    "semantic web",
+    "web3"
+  ],
+  "exports": {
+    ".": {
+      "types": "./lib/esm/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js"
+    },
+    "./*.js": {
+      "types": "./lib/esm/*.d.ts",
+      "import": "./lib/esm/*.js",
+      "require": "./lib/cjs/*.js"
+    },
+    "./*": {
+      "types": "./lib/esm/*.d.ts",
+      "import": "./lib/esm/*.js",
+      "require": "./lib/cjs/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "lib/esm/*"
+      ]
+    }
+  },
+  "dependencies": {
+    "@_linked/core": "^2.0"
+  },
+  "devDependencies": {
+    "@_linked/cli": "^1.2",
+    "@types/node": "^22.13.14",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^5.0.7",
+    "tsconfig-to-dual-package": "^1.2.0",
+    "typescript": "^5.7.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
