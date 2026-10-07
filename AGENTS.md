@@ -1,8 +1,10 @@
 # AGENTS.md — @linked.cm/access-templates
 
-Staged in the **linked-cm** org (npm scope `@linked.cm`) pending René's review; moves to linked-fw (`@_linked`) only after approval. The first npm publish is approved manually by René.
+Staged in the **linked-cm** org (npm scope `@linked.cm`) pending René's review; moves to linked-fw (`@_linked`) only after approval. The first npm publish is approved manually by René; until then the repo has no `publish.yml`, so merging to `main` cannot release it (same as `linked-cm/safety`).
 
-Network role templates for `@_linked/access`: role templates as shapes, per-organization roles based on them, adjustments that survive template upgrades, materialized into ordinary grants. Start with `docs/plans/001-role-templates-as-shapes.md`.
+Canonical working copy: `/Volumes/LIGHT/linked-cm/main/access-templates`. Build and tests follow `@linked.cm/access`: `npm run build` (`linked build`), `npm test` (jest + ts-jest, ESM).
+
+Network role templates for `@linked.cm/access`: role templates as shapes, per-organization roles based on them, adjustments that survive template upgrades, materialized into ordinary grants. Start with `docs/plans/001-role-templates-as-shapes.md`.
 
 ## Agent docs (`docs/`)
 

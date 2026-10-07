@@ -1,5 +1,5 @@
 ---
-summary: Network role templates as shapes — per-organization roles based on them, adjustments that survive upgrades, materialized into ordinary @_linked/access grants
+summary: Network role templates as shapes — per-organization roles based on them, adjustments that survive upgrades, materialized into ordinary @linked.cm/access grants
 packages: [access-templates, access, org, core]
 ---
 
@@ -7,7 +7,7 @@ packages: [access-templates, access, org, core]
 
 ## 1. Why this package exists
 
-`@_linked/access` evaluates grants: an assignee may perform actions on a target while conditions hold. Grants
+`@linked.cm/access` evaluates grants: an assignee may perform actions on a target while conditions hold. Grants
 are shapes (`cnacl:AccessGrant`), stored as triples, and the evaluator is complete for what an app needs
 (assignee = actor or any id the host puts in the context, selectors down to shape/instance/property,
 fail-closed resolver conditions, deny wins, attenuation).
@@ -35,7 +35,7 @@ OrganizationRole  (one organization's)      an @_linked/org Role belonging to on
   └─ RoleAdjustment*                        + or − a rule, pinned; survives template upgrades
         │ materialize
         ▼
-AccessGrant*  (@_linked/access)             assignee = the OrganizationRole
+AccessGrant*  (@linked.cm/access)             assignee = the OrganizationRole
                                              target  = the rule's selector
                                              condition = boundary(within: the organization)
 ```
@@ -45,7 +45,7 @@ AccessGrant*  (@_linked/access)             assignee = the OrganizationRole
 | Shape | Class | Key properties |
 |---|---|---|
 | `RoleTemplate` | `acct:RoleTemplate` | `key` (stable, e.g. `serve.manager`), `version` (integer), `label`, `description`, `publishedBy` (the app/package), `level` (`owner \| manager \| moderator \| member \| post`), `rules` (`contains`) |
-| `TemplateRule` | `acct:Rule` (`dependent`) | `effect` (`permit \| prohibit`), `actions` (from the `@_linked/access` action vocabulary), `target` (a selector: capability, shape class, or property), `conditions` (extra, e.g. a `vc` requirement) |
+| `TemplateRule` | `acct:Rule` (`dependent`) | `effect` (`permit \| prohibit`), `actions` (from the `@linked.cm/access` action vocabulary), `target` (a selector: capability, shape class, or property), `conditions` (extra, e.g. a `vc` requirement) |
 | `OrganizationRole` | extends `@_linked/org` `Role` | `roleIn` (the organization), `basedOn` (a `RoleTemplate`) + `basedOnVersion`, `label` (may rename), `level`, `createdBy`, `adjustments` (`contains`) |
 | `RoleAdjustment` | `acct:Adjustment` (`dependent`) | a `TemplateRule`-shaped rule plus `op` (`add \| remove`), `pinnedBy`, `pinnedAt`, `reason` |
 
@@ -55,7 +55,7 @@ model, not two. Memberships point at an `OrganizationRole` with `org:role`, exac
 
 ### Why the assignee is the organization's role
 
-`@_linked/access` collects grants whose assignee is the actor or any id in `context.memberships`, which the
+`@linked.cm/access` collects grants whose assignee is the actor or any id in `context.memberships`, which the
 HOST builds. The host adds the `OrganizationRole`s a person holds (through their memberships) to that list.
 A grant assigned to an `OrganizationRole` therefore reaches everyone holding it — **one grant per rule per
 organization, never one per person**. It is safe precisely because the role belongs to one organization; a
@@ -107,20 +107,20 @@ The package enforces 1, 2, 3, 5, 6. Rule 4 needs the host's role ladder, supplie
 
 ## 6. Non-goals
 
-- The evaluator, the grant store and the contract stay in `@_linked/access`, unchanged.
+- The evaluator, the grant store and the contract stay in `@linked.cm/access`, unchanged.
 - Identity and membership stay in `@_linked/org`.
 - No UI in this package; `diffRole` / `previewUpgrade` / `networkReport` return data for an app's screens.
 
 ## 7. Dependencies and compatibility
 
-`@_linked/core` (^2.22.8), `@_linked/org` (^1.2.1), `@_linked/access` (^0.1.1). Create Now's four hard-coded
+`@_linked/core` (^2.22.8), `@_linked/org` (^1.2.1), `@linked.cm/access` (^0.1.1). Create Now's four hard-coded
 templates can later be published through this package, giving one template system — proposed, not assumed.
 
 ## 8. Open questions (for René)
 
 1. Namespace for the new classes (`acct:` here is a placeholder).
 2. Should `OrganizationRole` live here, or be proposed to `@_linked/org` (it is an `org:Role` with `roleIn`)?
-3. Should `@_linked/access` eventually read `basedOn` to render "Manager (standard, 1 adjustment)" in its own
+3. Should `@linked.cm/access` eventually read `basedOn` to render "Manager (standard, 1 adjustment)" in its own
    effective-access screens, or should that stay in each app?
 
 ## 9. Build order

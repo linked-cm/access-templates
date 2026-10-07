@@ -5,13 +5,25 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "downlevelIteration": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "pretty": true,
-    "jsx": "react",
-    "types": ["node"]
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true
   },
   "files": [
-    "./src/types.ts","./src/index.ts"],
-  "include": ["./src/backend.ts"]
+    "./src/index.ts",
+    "./src/backend.ts"
+  ],
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "./src/**/*.test.ts"
+  ]
 }
