@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "npm exec linked build",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs --passWithNoTests"
   },
   "dependencies": {
     "@_linked/core": "^2.25.0",
