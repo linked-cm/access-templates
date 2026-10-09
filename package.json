@@ -2,7 +2,7 @@
   "name": "@linked.cm/access-templates",
   "description": "Network role templates for @linked.cm/access: versioned role templates as shapes, per-organization roles based on them, adjustments that survive template upgrades, materialized into ordinary grants.",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/linked-cm/access-templates.git"
